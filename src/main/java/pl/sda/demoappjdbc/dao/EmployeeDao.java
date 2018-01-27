@@ -25,7 +25,7 @@ public class EmployeeDao {
                     resultSet.getInt("emp_no"),
                     resultSet.getString("first_name"),
                     resultSet.getString("first_last"));
-        };
+        }
         return employee;
     }
 }

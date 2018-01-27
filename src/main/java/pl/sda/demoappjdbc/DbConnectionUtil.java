@@ -13,9 +13,13 @@ public class DbConnectionUtil {
         Optional<Connection> connection = null;
         registerDbDriver(dbConfiguration);
         try {
-            connection = Optional.of(DriverManager.getConnection(dbConfiguration.getUrl() + "/"
-                    + dbConfiguration.getDbName(), dbConfiguration.getUser(), dbConfiguration.getPassword()));
-        } catch (SQLException e) {}
+            //TODO przeanalizować to połączenie
+            connection = Optional.of(DriverManager.getConnection(
+                    dbConfiguration.getUrl() + "?" + dbConfiguration.getUseSSL()
+                    + "/" + dbConfiguration.getDbName(), dbConfiguration.getUser(), dbConfiguration.getPassword()));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
             //log exception
         return connection;
     }

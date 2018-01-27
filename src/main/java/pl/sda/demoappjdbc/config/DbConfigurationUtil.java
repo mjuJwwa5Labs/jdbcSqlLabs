@@ -19,7 +19,8 @@ public final class DbConfigurationUtil {
             properties.getProperty("db.url"),
             properties.getProperty("db.name"),
             properties.getProperty("db.user"),
-            properties.getProperty("db.password"));
+            properties.getProperty("db.password"),
+            properties.getProperty("db.useSSL"));
         return dbConfiguration;
     }
 

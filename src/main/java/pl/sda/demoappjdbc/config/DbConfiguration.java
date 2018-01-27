@@ -7,13 +7,15 @@ public class DbConfiguration {
     private String dbName;
     private String user;
     private String password;
+    private String useSSL;
 
-    public DbConfiguration(String driver, String url, String dbName, String user, String password) {
+    public DbConfiguration(String driver, String url, String dbName, String user, String password, String useSSL) {
         this.driver = driver;
         this.url = url;
         this.dbName = dbName;
         this.user = user;
         this.password = password;
+        this.useSSL = useSSL;
     }
 
     public String getDriver() {
@@ -35,4 +37,6 @@ public class DbConfiguration {
     public String getPassword() {
         return password;
     }
+
+    public String getUseSSL() {return useSSL; }
 }
