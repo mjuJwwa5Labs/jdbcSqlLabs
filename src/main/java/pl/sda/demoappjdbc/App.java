@@ -55,7 +55,7 @@ public class App {
 
         //Sprawdzam czy mogę go raz jeszcze dodać, mimo że już istnieje
         System.out.println("\n----- Próbuję dodać do bazy istniejącego już pracownika -----");
-        try {
+       try {
             Optional<Employee> duplicatedEmployee = employeeService.addEmployeeToDb(
                     new Employee(
                             employeeToAdd.getFirstname(),
@@ -65,8 +65,8 @@ public class App {
                             employeeToAdd.getHireDate()
                     )
             );
-        } catch (SQLException e) {
+       } catch (SQLException e) {
             System.out.println("Ten pracownik już jest w bazie danych, nie możesz go baranku dodać po raz drugi");
-        }
+       }
     }
 }

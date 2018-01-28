@@ -1,6 +1,7 @@
 package pl.sda.demoappjdbc.service;
 
 import pl.sda.demoappjdbc.dao.EmployeeDao;
+import pl.sda.demoappjdbc.exceptions.DbRecordAlreadyExistsException;
 import pl.sda.demoappjdbc.model.Employee;
 
 import java.sql.SQLException;
@@ -20,7 +21,8 @@ public class EmployeeService {
         Optional<Employee> validatedEmployee = validateIfEmployeeExists(employee);
 
         if (validatedEmployee.isPresent()) {
-            throw new SQLException("This user already exists in the DB");
+//            throw new SQLException("This user already exists in the DB");
+            throw new DbRecordAlreadyExistsException();
         }
 
         Employee employeeToBeInserted = employee;
