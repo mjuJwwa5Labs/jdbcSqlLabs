@@ -16,12 +16,17 @@ public class App {
 
     private static Connection connection;
 
-    public static void main( String[] args ) throws SQLException {
+    public static void main(String[] args) throws SQLException {
         DbConfiguration dbConfiguration = DbConfigurationUtil.initDbConfigurationFromProperties();
+
         connection = DbConnectionUtil.connectToDatabase(dbConfiguration)
-                .orElseThrow(() -> new RuntimeException("Unable to get connection to DB!") );
+                .orElseThrow(() -> new RuntimeException("Unable to get connection do DB!"));
+
         EmployeeDao employeeDao = new EmployeeDao(connection);
         Employee employee = employeeDao.findById(10001);
+
         System.out.println(employee.getId());
+        System.out.println(employee.getFirstname());
+        System.out.println(employee.getLastname());
     }
 }

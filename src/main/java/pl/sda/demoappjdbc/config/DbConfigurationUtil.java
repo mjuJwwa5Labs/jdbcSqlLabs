@@ -12,30 +12,32 @@ public final class DbConfigurationUtil {
     private static final String DB_CONFIGURATION_PROPERTIES_FILE = "dbConnection.properties";
 
     public static DbConfiguration initDbConfigurationFromProperties() {
-        DbConfiguration dbConfiguration = null;
         Properties properties = createProperties();
-        dbConfiguration = new DbConfiguration(
-            properties.getProperty("jdbc.driver"),
-            properties.getProperty("db.url"),
-            properties.getProperty("db.name"),
-            properties.getProperty("db.user"),
-            properties.getProperty("db.password"),
-            properties.getProperty("db.useSSL"));
+        DbConfiguration dbConfiguration = new DbConfiguration(
+                properties.getProperty("jdbc.driver"),
+                properties.getProperty("db.url"),
+                properties.getProperty("db.name"),
+                properties.getProperty("db.useSSL"),
+                properties.getProperty("db.timeZone"),
+                properties.getProperty("db.user"),
+                properties.getProperty("db.password"));
+
         return dbConfiguration;
     }
 
     private static final Properties createProperties() {
         Properties properties = null;
 
-        try (InputStream inputStream = App.class.getClassLoader().getResourceAsStream(DB_CONFIGURATION_PROPERTIES_FILE)) {
+        try (InputStream inputStream = App.class.getClassLoader()
+                .getResourceAsStream(DB_CONFIGURATION_PROPERTIES_FILE)) {
             properties = new Properties();
             properties.load(inputStream);
-
         } catch (FileNotFoundException e) {
             // TODO log error
         } catch (IOException e) {
             // TODO log error
         }
+
         return properties;
     }
 }
