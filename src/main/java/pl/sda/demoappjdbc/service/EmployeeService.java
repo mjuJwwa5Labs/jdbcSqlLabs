@@ -17,8 +17,9 @@ public class EmployeeService {
     public Optional<Employee> addEmployeeToDb(Employee employee) throws SQLException {
 
         Optional<Employee> insertedEmployeeOptional = null;
+        Optional<Employee> validatedEmployee = validateIfEmployeeExists(employee);
 
-        if (validateIfEmployeeExists(employee).isPresent()) {
+        if (validatedEmployee.isPresent()) {
             throw new SQLException("This user already exists in the DB");
         }
 
@@ -39,12 +40,11 @@ public class EmployeeService {
         return updatedEmployee;
     }
 
-    private Optional<Employee> validateIfEmployeeExists(Employee employee) throws SQLException {
+    public Optional<Employee> validateIfEmployeeExists(Employee employee) throws SQLException {
         Optional<Employee> validatedEmployee = employeeDao.findByEmployee(employee);
         return validatedEmployee;
     }
 
-    //TODO ta metoda pójdzie do DAO
     public int incrementEmployeeId(int employeeMaxId) {
         return ++employeeMaxId;
     }
