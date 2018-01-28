@@ -1,5 +1,6 @@
 package pl.sda.demoappjdbc;
 
+import org.apache.poi.hssf.record.DBCellRecord;
 import pl.sda.demoappjdbc.config.DbConfiguration;
 
 import java.sql.Connection;
@@ -14,27 +15,31 @@ public final class DbConnectionUtil {
 
         registerDbDriver(dbConfiguration);
         try {
-            connection = Optional.of(DriverManager.getConnection(
-                        buildConnctionString(dbConfiguration),
-                        dbConfiguration.getUser(),
-                        dbConfiguration.getPassword()));
-            //connection = Optional.of(DriverManager.getConnection("jdbc:mysql://localhost:3306/employees?useSSL=false", "root", "M@rek"));
+            connection = connect(dbConfiguration);
         } catch (SQLException e) {
             System.out.println("Can't connect to the DB with message:\n " + e.getMessage());
         }
         return connection;
     }
 
+    private static Optional<Connection> connect(DbConfiguration dbConfiguration) throws SQLException {
+        String url = buildConnctionString(dbConfiguration);
+        return Optional.of(DriverManager.getConnection(
+                url,
+                dbConfiguration.getUser(),
+                dbConfiguration.getPassword()));
+    }
+
     private static String buildConnctionString(DbConfiguration dbConfiguration) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(dbConfiguration.getUrl());
-        stringBuilder.append("/");
-        stringBuilder.append(dbConfiguration.getDbName());
-        stringBuilder.append("?");
-        stringBuilder.append(dbConfiguration.getUseSSL());
-        stringBuilder.append("&");
-        stringBuilder.append(dbConfiguration.getTimeZone());
+        stringBuilder.append(dbConfiguration.getUrl())
+                .append("/")
+                .append(dbConfiguration.getDbName())
+                .append("?")
+                .append(dbConfiguration.getUseSSL())
+                .append("&")
+                .append(dbConfiguration.getTimeZone());
 
         return stringBuilder.toString();
     }
@@ -43,7 +48,7 @@ public final class DbConnectionUtil {
         try {
             Class.forName(dbConfiguration.getDriver());
         } catch (ClassNotFoundException e) {
-            System.out.println("Nie mogę zarejestrować drivera");
+            System.out.println("Error while driver registration: " + e.getMessage());
         }
     }
 }
